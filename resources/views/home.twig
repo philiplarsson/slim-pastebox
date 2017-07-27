@@ -1,1 +1,13 @@
-<h1>Welcome to the start page!</h1>
+{% extends 'base-templates/main-template.twig' %}
+
+{% block content %}
+    <h1>Welcome</h1>
+    <form action="{{ path_for('create') }}" method="post">
+        Title: <input type="text" name="title"><br/>
+        Syntax: <input type="text" name="syntax"><br/>
+        <label for="paste">Paste:</label>
+        <textarea name="paste" id="paste" cols="30" rows="10"></textarea>
+        <br/>
+        <button type="submit">Create paste</button>
+    </form>
+{% endblock %}
