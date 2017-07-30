@@ -27,7 +27,7 @@
                         <tbody>
                         <tr>
                             <td><a href="http://{{ paste.link }}">{{ paste.link }}</a></td>
-                            <td>{{ paste.title }}</td>
+                            <td>{{ paste.title | truncate(50, true) }}</td>
                             <td>{{ paste.created_at }}</td>
                             <td>
                                 <pre>{{ paste.paste | truncate(50) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre>
