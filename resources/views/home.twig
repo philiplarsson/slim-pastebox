@@ -1,13 +1,68 @@
 {% extends 'base-templates/main-template.twig' %}
 
 {% block content %}
-    <h1>Welcome</h1>
-    <form action="{{ path_for('create') }}" method="post">
-        Title: <input type="text" name="title"><br/>
-        Syntax: <input type="text" name="syntax"><br/>
-        <label for="paste">Paste:</label>
-        <textarea name="paste" id="paste" cols="30" rows="10"></textarea>
-        <br/>
-        <button type="submit">Create paste</button>
-    </form>
+    <section class="section">
+        <div class="container">
+
+            <h1 class="title is-1 has-text-centered">Pastebox</h1>
+            <br/>
+            <form action="{{ path_for('create') }}" method="post">
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Title</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" type="text" name="title">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Syntax</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" type="text" name="syntax">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label">Paste</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+
+                                <textarea class="textarea" name="paste" placeholder="Hello World" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <!-- Left empty for spacing -->
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" class="button is-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </section>
 {% endblock %}

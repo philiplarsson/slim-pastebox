@@ -10,22 +10,33 @@
 {#public 'link' => string 'localhost:8080/p/1' (length=18)#}
 
 {% block content %}
-    {% if pastes %}
-        <table>
-            <tr>
-                <th>Link</th>
-                <th><strong>Title</strong></th>
-                <th>Created at</th>
-                <th>Paste</th>
-            </tr>
-        {% for paste in pastes %}
-            <tr>
-                <td><a href="http://{{ paste.link }}">{{ paste.link }}</a></td>
-                <td>{{ paste.title }}</td>
-                <td>{{ paste.created_at }}</td>
-                <td><pre>{{ paste.paste | truncate(50) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre></td>
-            </tr>
-        {% endfor %}
-        </table>
-    {% endif %}
+    <section class="section">
+        <div class="container">
+            <h2 class="title is-2">Pastes</h2>
+            {% if pastes %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Link</th>
+                        <th><strong>Title</strong></th>
+                        <th>Created at</th>
+                        <th>Paste</th>
+                    </tr>
+                    </thead>
+                    {% for paste in pastes %}
+                        <tbody>
+                        <tr>
+                            <td><a href="http://{{ paste.link }}">{{ paste.link }}</a></td>
+                            <td>{{ paste.title }}</td>
+                            <td>{{ paste.created_at }}</td>
+                            <td>
+                                <pre>{{ paste.paste | truncate(50) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre>
+                            </td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </section>
 {% endblock %}

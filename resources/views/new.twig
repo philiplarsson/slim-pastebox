@@ -1,8 +1,12 @@
 {% extends 'base-templates/main-template.twig' %}
 
 {% block content %}
-    {% if link %}
-        <h3>Paste created!</h3>
-        Link: <strong><a href="http://{{ link }}">{{ link }}</a></strong>
-    {% endif %}
+    <section class="section">
+        <div class="container">
+            {% if link %}
+                <h3 class="title is-3">Paste created!</h3>
+                Link: <strong><a href="http://{{ link }}">{{ link }}</a></strong>
+            {% endif %}
+        </div>
+    </section>
 {% endblock %}
