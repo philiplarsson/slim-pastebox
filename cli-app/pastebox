@@ -1,0 +1,57 @@
+#! /usr/bin/python3
+""" pastebox
+Script that takes data from clipboard and returns a link to local pastebox.
+
+Requires click, pyperclip and requests. All available using pip.
+"""
+
+import click
+import pyperclip
+import requests
+import json
+import sys
+
+@click.command()
+@click.option('--syntax', default='php', help='Language used for syntax highlighting')
+@click.option('--title', default='', help='Title for pastebox')
+@click.option('--silent/--no-silent', default=False, help='No output if paste succeeds')
+
+def createPaste(syntax, title, silent):
+    """Creates new paste"""
+    pastebox_url = "http://localhost:8080/paste"
+    headers = {'content-type': 'application/json'}
+    paste = pyperclip.paste()
+    if not paste:
+        click.echo('Paste is empty... ')
+        sys.exit(1)
+        
+    data = json.dumps({
+        "data": {
+            "paste": paste,
+            "syntax": syntax,
+            "title": title
+        }
+    })
+    if not silent:
+        click.echo('Creating paste... \n')
+
+    response = requests.post(pastebox_url, data, headers=headers)
+    body = response.json()
+    if (response.status_code == 200):
+        link = body['data']['attributes']['url']
+        if not silent:
+            click.echo(click.style(link, fg='blue'))
+        pyperclip.copy(link)
+    else:
+        click.echo(
+            click.style(
+                'Could not create paste. Status code %s' % response.status_code, fg='red'
+            )
+        )
+        for error in body['errors']:
+            click.echo(click.style(' Response: %s' % error['title'], fg='red'))
+
+    
+if __name__ == '__main__':
+    createPaste()
+
