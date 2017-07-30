@@ -1,6 +1,6 @@
-* Todo [2/4]
-
-- [X] Create CLI app
+* Todo [2/5]
+- [ ] Add about page (include highlightjs, slim)
 - [ ] Allow delete paste
 - [ ] Add author of paste
+- [X] Create CLI app
 - [X] Close notification when creating paste without paste content.
