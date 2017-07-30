@@ -26,6 +26,7 @@ class PasteController
         if (!isset($pasteBox)) {
             return $this->view->render($response, 'paste.twig');
         }
+
         return $this->view->render($response, 'paste.twig', [
             'pasteBox' => $pasteBox
         ]);
@@ -38,6 +39,16 @@ class PasteController
         if (!isset($paste)) {
             // TODO: redirect
         }
-        $this->pasteHandler->createPasteBox($parsedBody['title'], $parsedBody['syntax'], $paste);
+        $base62 = $this->pasteHandler->createPasteBox($parsedBody['title'], $parsedBody['syntax'], $paste);
+        $link = $this->getLink($base62);
+
+        return $this->view->render($response, 'new.twig', [
+            'link' => $link
+        ]);
+    }
+
+    private function getLink($base62)
+    {
+        return $_SERVER['HTTP_HOST'] . '/p/' . $base62;
     }
 }

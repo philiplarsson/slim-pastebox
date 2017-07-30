@@ -32,6 +32,7 @@ class PasteHandler
             ':base62'    => $base62,
             ':created_at' => $currentDate
         ]);
+        return $base62;
     }
 
     private function createPaste($paste)
@@ -56,6 +57,24 @@ class PasteHandler
         $paste = $this->getPaste($pasteBox->paste_id);
         $pasteBox->paste = $paste;
         return $pasteBox;
+    }
+
+    public function getPasteBoxes($limit = 25)
+    {
+        $sql = "SELECT * FROM pastebox LIMIT :limit";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, PasteBox::class);
+        $stmt->execute([ ':limit' => $limit ]);
+        $pasteBoxes = $stmt->fetch();
+        if ($pasteBoxes === false) {
+            return null;
+        }
+        foreach ($pasteBoxes as $pasteBox) {
+            $paste = $this->getPaste($pasteBox->paste_id);
+            $pasteBox->paste = $paste;
+        }
+
+        return $pasteBoxes;
     }
 
     public function getPaste($pasteId)
