@@ -2,12 +2,42 @@
 
 namespace App\Controllers;
 
-class PasteController extends Controller
+use Slim\Views\Twig;
+use App\PasteHandler;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+
+class PasteController
 {
 
-    public function create()
+    protected $view;
+    protected $pasteHandler;
+
+    public function __construct(Twig $view, PasteHandler $ph)
     {
-        var_dump('im here');
-        die();
+        $this->view = $view;
+        $this->pasteHandler = $ph;
+    }
+
+    public function index(Request $request, Response $response, $args)
+    {
+        $base62 = $args['base62'];
+        $pasteBox = $this->pasteHandler->getPasteBox($base62);
+        if (!isset($pasteBox)) {
+            return $this->view->render($response, 'paste.twig');
+        }
+        return $this->view->render($response, 'paste.twig', [
+            'pasteBox' => $pasteBox
+        ]);
+    }
+
+    public function create(Request $request, Response $response)
+    {
+        $parsedBody = $request->getParsedBody();
+        $paste = $parsedBody['paste'];
+        if (!isset($paste)) {
+            // TODO: redirect
+        }
+        $this->pasteHandler->createPasteBox($parsedBody['title'], $parsedBody['syntax'], $paste);
     }
 }
