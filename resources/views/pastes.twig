@@ -13,17 +13,17 @@
     {% if pastes %}
         <table>
             <tr>
+                <th>Link</th>
                 <th><strong>Title</strong></th>
                 <th>Created at</th>
-                <th>Link</th>
                 <th>Paste</th>
             </tr>
         {% for paste in pastes %}
             <tr>
+                <td><a href="http://{{ paste.link }}">{{ paste.link }}</a></td>
                 <td>{{ paste.title }}</td>
                 <td>{{ paste.created_at }}</td>
-                <td><a href="http://{{ paste.link }}">{{ paste.link }}</a></td>
-                <td><pre>{{ paste.paste | truncate(20) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre></td>
+                <td><pre>{{ paste.paste | truncate(50) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre></td>
             </tr>
         {% endfor %}
         </table>
