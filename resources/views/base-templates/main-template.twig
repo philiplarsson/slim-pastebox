@@ -8,18 +8,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/styles/dracula.css">
     <script src="/js/highlight.pack.js"></script>
+    <script src="/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 {% include 'base-templates/navigation.twig' %}
+
+{% if notification %}
+    <div class="container">
+        <div class="notification is-warning">
+            <button class="delete"></button>
+            <p>{{ notification }}</p>
+        </div>
+    </div>
+{% endif %}
+
 {% block content %}
 
 {% endblock %}
-{% if notification %}
-    <div class="notification">
-        <button class="delete"></button>
-        <p>{{ notification }}</p>
-    </div>
-{% endif %}
 </body>
 </html>
