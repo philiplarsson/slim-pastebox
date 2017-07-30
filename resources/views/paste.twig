@@ -3,26 +3,75 @@
 {% block content %}
     <section class="section">
         <div class="container">
-            <h1 class="title is-1">Paste</h1>
+            <h1 class="title is-1 has-text-centered">Paste</h1>
+            <br/>
             {% if not pasteBox %}
-                <p>Sorry no paste with that id. </p>
+            <p>Sorry no paste with that id. </p>
             {% else %}
-                {#public 'id' => string '10' (length=2)#}
-                {#public 'paste_id' => string '10' (length=2)#}
-                {#public 'title' => string 'My fancy paste' (length=14)#}
-                {#public 'syntax' => string 'php' (length=3)#}
-                {#public 'base62' => string 'a' (length=1)#}
-                {#public 'created_at' => string '30-07-2017 03:03' (length=16)#}
-                {#public 'paste' => string '<?php class MyClass { ... } ' (length=28)#}
-                <h3 class="subtitle is-3">{{ pasteBox.title }}</h3>
-                <p><strong>Created at:</strong> {{ pasteBox.created_at }}</p>
-                {% if pasteBox.syntax %}
-                    <p><strong>Syntax:</strong> {{ pasteBox.syntax }}</p>
-                    <pre class="code-paste"><code class="{{ pasteBox.syntax }}">{{ pasteBox.paste }}</code></pre>
-                {% else %}
-                    <pre class="code-paste"><code class="nohighlight">{{ pasteBox.paste }}</code></pre>
+            {#public 'id' => string '10' (length=2)#}
+            {#public 'paste_id' => string '10' (length=2)#}
+            {#public 'title' => string 'My fancy paste' (length=14)#}
+            {#public 'syntax' => string 'php' (length=3)#}
+            {#public 'base62' => string 'a' (length=1)#}
+            {#public 'created_at' => string '30-07-2017 03:03' (length=16)#}
+            {#public 'paste' => string '<?php class MyClass { ... } ' (length=28)#}
+            <div class="columns">
+                <div class="column is-9">
+                    {% if pasteBox.syntax %}
+                        <pre class="code-paste" ><code
+                                    class="{{ pasteBox.syntax }}" id="code-copy">{{ pasteBox.paste }}</code></pre>
+                    {% else %}
+                        <pre class="code-paste"><code class="nohighlight">{{ pasteBox.paste }}</code></pre>
+                    {% endif %}
+                </div>
+                <div class="column is-3 sidebar">
+                    <h4 title="Title of paste" class="title is-4 has-text-centered">
+                        {{ pasteBox.title }}
+                    </h4>
+                    <table class="table is-fullwidth is-striped 3">
+                        <tbody>
+                        {% if pasteBox.syntax %}
+                            <tr>
+                                <th>Syntax</th>
+                                <td>{{ pasteBox.syntax }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Created at</th>
+                            <td>{{ pasteBox.created_at }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table is-fullwidth">
+                        <tr>
+                            <td>
+                                <a class="button is-info 3" data-clipboard-target="#code-copy">
+                                    <span class="icon">
+                                        <i class="fa fa-clipboard"></i>
+                                    </span>
+                                    <span>Copy Paste</span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path_for('deletePaste', { 'base62': pasteBox.base62 }) }}"
+                                   class="button is-danger">
+                                    <span class="icon is-small">
+                                        <i class="fa fa-times"></i>
+                                    </span>
+                                    <span>Delete Paste</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
                 {% endif %}
-            {% endif %}
+            </div>
         </div>
     </section>
+    <script>
+        var copyCode = new Clipboard('.button');
+        copyCode.on('success', function(event) {
+            event.clearSelection();
+        });
+    </script>
 {% endblock %}
