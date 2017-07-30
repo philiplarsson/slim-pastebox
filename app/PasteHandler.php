@@ -26,12 +26,13 @@ class PasteHandler
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
-            ':paste_id'  => $pasteId,
-            ':title'     => $title,
-            ':syntax'    => $syntax,
-            ':base62'    => $base62,
+            ':paste_id'   => $pasteId,
+            ':title'      => $title,
+            ':syntax'     => $syntax,
+            ':base62'     => $base62,
             ':created_at' => $currentDate
         ]);
+
         return $base62;
     }
 
@@ -56,6 +57,7 @@ class PasteHandler
         }
         $paste = $this->getPaste($pasteBox->paste_id);
         $pasteBox->paste = $paste;
+
         return $pasteBox;
     }
 
@@ -84,6 +86,28 @@ class PasteHandler
         $stmt->setFetchMode(\PDO::FETCH_ASSOC);
         $stmt->execute([ ':paste_id' => $pasteId ]);
         $paste = $stmt->fetch();
+
         return $paste['paste'];
+    }
+
+    public function delete($base62)
+    {
+        $pasteBox = $this->getPasteBox($base62);
+        $this->deletePaste($pasteBox->paste_id);
+        $this->deletePasteBox($base62);
+    }
+
+    private function deletePaste($pasteId)
+    {
+        $sql = "DELETE FROM pastes WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([ ':id' => $pasteId ]);
+    }
+
+    private function deletePasteBox($base62)
+    {
+        $sql = "DELETE FROM pastebox WHERE base62 = :base62";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([ ':base62' => $base62 ]);
     }
 }

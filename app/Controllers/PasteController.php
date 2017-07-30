@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Router;
 use Slim\Views\Twig;
 use App\PasteHandler;
 
@@ -12,11 +13,13 @@ class PasteController
 
     protected $view;
     protected $pasteHandler;
+    protected $router;
 
-    public function __construct(Twig $view, PasteHandler $ph)
+    public function __construct(Twig $view, PasteHandler $ph, Router $router)
     {
         $this->view = $view;
         $this->pasteHandler = $ph;
+        $this->router = $router;
     }
 
     public function showPaste(Request $request, Response $response, $args)
@@ -61,6 +64,14 @@ class PasteController
         return $this->view->render($response, 'new.twig', [
             'link' => $link
         ]);
+    }
+
+    public function deletePaste(Request $request, Response $response, $args)
+    {
+        $base62 = $args['base62'];
+
+        $this->pasteHandler->delete($base62);
+        return  $response->withRedirect($this->router->pathFor('showPastes'));
     }
 
     public function showAPI(Request $request, Response $response)

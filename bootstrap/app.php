@@ -35,7 +35,8 @@ $container["db"] = function ($c) {
 $container["App\Controllers\PasteController"] = function ($c) {
     $view = $c->view;
     $ph = new \App\PasteHandler($c->db);
-    return new \App\Controllers\PasteController($view, $ph);
+    $router = $c->router;
+    return new \App\Controllers\PasteController($view, $ph, $router);
 };
 
 /* Load routes */

@@ -1,12 +1,14 @@
 {% extends 'base-templates/main-template.twig' %}
 
 {% block content %}
-    <section class="section">
-        <div class="container">
-            {% if link %}
-                <h3 class="title is-3">Paste created!</h3>
-                Link: <strong><a href="http://{{ link }}">{{ link }}</a></strong>
-            {% endif %}
+    <section class="hero is-light is-medium">
+        <div class="hero-body">
+            <div class="container">
+                {% if link %}
+                    <a href="http://{{ link }}"><p class="has-text-centered is-size-1">{{ link }}</p></a>
+                    <p class="has-text-centered is-size-5">Visit the link above to show your new paste. </p>
+                {% endif %}
+            </div>
         </div>
     </section>
 {% endblock %}

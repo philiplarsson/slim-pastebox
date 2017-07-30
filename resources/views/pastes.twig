@@ -21,6 +21,7 @@
                         <th><strong>Title</strong></th>
                         <th>Created at</th>
                         <th>Paste</th>
+                        <th></th>
                     </tr>
                     </thead>
                     {% for paste in pastes %}
@@ -31,6 +32,13 @@
                             <td>{{ paste.created_at }}</td>
                             <td>
                                 <pre>{{ paste.paste | truncate(50) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre>
+                            </td>
+                            <td>
+                                <span class="icon">
+                                    <a href="{{ path_for('deletePaste', { 'base62': paste.base62 }) }}">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </span>
                             </td>
                         </tr>
                         </tbody>
