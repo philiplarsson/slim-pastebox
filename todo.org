@@ -1,0 +1,5 @@
+* Todo [1/3]
+
+- [X] Create CLI app
+- [ ] Allow delete paste
+- [ ] Add author of paste
