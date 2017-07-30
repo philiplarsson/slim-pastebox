@@ -19,7 +19,7 @@ class PasteController
         $this->pasteHandler = $ph;
     }
 
-    public function index(Request $request, Response $response, $args)
+    public function showPaste(Request $request, Response $response, $args)
     {
         $base62 = $args['base62'];
         $pasteBox = $this->pasteHandler->getPasteBox($base62);
@@ -29,6 +29,18 @@ class PasteController
 
         return $this->view->render($response, 'paste.twig', [
             'pasteBox' => $pasteBox
+        ]);
+    }
+
+    public function showPastes(Request $request, Response $response)
+    {
+        $pasteBoxes = $this->pasteHandler->getPasteBoxes();
+
+        foreach ($pasteBoxes as $paste) {
+            $paste->link = $this->getLink($paste->base62);
+        }
+        return $this->view->render($response, 'pastes.twig', [
+            'pastes' => $pasteBoxes
         ]);
     }
 

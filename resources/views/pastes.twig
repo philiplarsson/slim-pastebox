@@ -1,0 +1,31 @@
+{% extends 'base-templates/main-template.twig' %}
+
+{#public 'id' => string '1' (length=1)#}
+{#public 'paste_id' => string '1' (length=1)#}
+{#public 'title' => string 'My fancy paste' (length=14)#}
+{#public 'syntax' => string 'php' (length=3)#}
+{#public 'base62' => string '1' (length=1)#}
+{#public 'created_at' => string '30-07-2017 03:03' (length=16)#}
+{#public 'paste' => string '<?php class MyClass { ... } ' (length=28)#}
+{#public 'link' => string 'localhost:8080/p/1' (length=18)#}
+
+{% block content %}
+    {% if pastes %}
+        <table>
+            <tr>
+                <th><strong>Title</strong></th>
+                <th>Created at</th>
+                <th>Link</th>
+                <th>Paste</th>
+            </tr>
+        {% for paste in pastes %}
+            <tr>
+                <td>{{ paste.title }}</td>
+                <td>{{ paste.created_at }}</td>
+                <td><a href="http://{{ paste.link }}">{{ paste.link }}</a></td>
+                <td><pre>{{ paste.paste | truncate(20) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre></td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

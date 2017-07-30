@@ -8,4 +8,5 @@ $app->get('/', function (Request $request, Response $response) {
     return $this->view->render($response, 'home.twig');
 });
 
-$app->get('/p/{base62}', PasteController::class . ':index');
+$app->get('/pastes', PasteController::class . ':showPastes');
+$app->get('/p/{base62}', PasteController::class . ':showPaste');

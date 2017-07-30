@@ -19,6 +19,7 @@ $container["view"] = function ($c) {
     // Instantiate and add Slim specific extensions
     $basePath = rtrim(str_ireplace('index.php', '', $c['request']->getUri()->getBasePath()), '/');
     $view->addExtension(new Slim\Views\TwigExtension($c['router'], $basePath));
+    $view->addExtension(new Twig_Extensions_Extension_Text());
     $view->addExtension(new Twig_Extension_Debug());
     return $view;
 };

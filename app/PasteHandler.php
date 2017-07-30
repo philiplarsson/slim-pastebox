@@ -61,11 +61,11 @@ class PasteHandler
 
     public function getPasteBoxes($limit = 25)
     {
-        $sql = "SELECT * FROM pastebox LIMIT :limit";
+        $sql = "SELECT * FROM pastebox ORDER BY id DESC LIMIT :limit";
         $stmt = $this->pdo->prepare($sql);
         $stmt->setFetchMode(\PDO::FETCH_CLASS, PasteBox::class);
         $stmt->execute([ ':limit' => $limit ]);
-        $pasteBoxes = $stmt->fetch();
+        $pasteBoxes = $stmt->fetchAll();
         if ($pasteBoxes === false) {
             return null;
         }

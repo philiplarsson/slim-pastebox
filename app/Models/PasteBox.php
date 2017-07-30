@@ -11,4 +11,5 @@ class PasteBox
     public $base62;
     public $created_at;
     public $paste;
+    public $link;
 }
