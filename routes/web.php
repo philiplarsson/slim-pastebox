@@ -10,3 +10,5 @@ $app->get('/', function (Request $request, Response $response) {
 
 $app->get('/pastes', PasteController::class . ':showPastes')->setName('showPastes');
 $app->get('/p/{base62}', PasteController::class . ':showPaste');
+$app->get('/api', PasteController::class . ':showAPI')->setName('showAPI');
+$app->post('/createPaste', PasteController::class . ':createPaste')->setName('createPaste');
