@@ -17,9 +17,10 @@
                 <h3 class="subtitle is-3">{{ pasteBox.title }}</h3>
                 <p><strong>Created at:</strong> {{ pasteBox.created_at }}</p>
                 {% if pasteBox.syntax %}
-                    <pre><code class="{{ pasteBox.syntax }}">{{ pasteBox.paste }}</code></pre>
+                    <p><strong>Syntax:</strong> {{ pasteBox.syntax }}</p>
+                    <pre class="code-paste"><code class="{{ pasteBox.syntax }}">{{ pasteBox.paste }}</code></pre>
                 {% else %}
-                    <pre><code class="nohighlight">{{ pasteBox.paste }}</code></pre>
+                    <pre class="code-paste"><code class="nohighlight">{{ pasteBox.paste }}</code></pre>
                 {% endif %}
             {% endif %}
         </div>

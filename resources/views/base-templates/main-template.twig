@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <title>pasteApp</title>
     <link rel="stylesheet" href="/css/bulma.css">
+    <link rel="stylesheet" href="/css/mainstyle.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/styles/dracula.css">
     <script src="/js/highlight.pack.js"></script>
@@ -14,5 +15,11 @@
 {% block content %}
 
 {% endblock %}
+{% if notification %}
+    <div class="notification">
+        <button class="delete"></button>
+        <p>{{ notification }}</p>
+    </div>
+{% endif %}
 </body>
 </html>

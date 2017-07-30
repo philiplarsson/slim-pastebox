@@ -48,8 +48,11 @@ class PasteController
     {
         $parsedBody = $request->getParsedBody();
         $paste = $parsedBody['paste'];
-        if (!isset($paste)) {
-            // TODO: redirect
+
+        if (!isset($paste) || empty($paste)) {
+            return $this->view->render($response, 'home.twig', [
+                'notification' => 'Must have any text in Paste to create a paste. '
+            ]);
         }
         $base62 = $this->pasteHandler->createPasteBox($parsedBody['title'], $parsedBody['syntax'], $paste);
         $link = $this->getLink($base62);
