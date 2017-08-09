@@ -55,7 +55,7 @@ class PasteController
 
         if (!isset($paste) || empty($paste)) {
             return $this->view->render($response, 'home.twig', [
-                'notification' => 'Must have any text in Paste to create a paste. '
+                'notification' => "Field 'Paste' is required. "
             ]);
         }
         $base62 = $this->pasteHandler->createPasteBox($parsedBody['title'], $parsedBody['syntax'], $paste);

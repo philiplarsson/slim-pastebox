@@ -1,7 +1,9 @@
-* Todo [4/6]
-- [X] Add about page (include highlightjs, slim)
+* Todo [4/8]
+- [ ] Add pagination to pastes page
+- [ ] Add "remove after X days" feature. Use php cron script.
 - [ ] Add author of paste
 - [ ] Add CLI readme and example usage
+- [X] Add about page (include highlightjs, slim)
 - [X] Allow delete paste
 - [X] Create CLI app
 - [X] Close notification when creating paste without paste content.
