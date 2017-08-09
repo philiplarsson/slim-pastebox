@@ -17,7 +17,6 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Link</th>
                         <th><strong>Title</strong></th>
                         <th>Created at</th>
                         <th>Paste</th>
@@ -27,15 +26,21 @@
                     {% for paste in pastes %}
                         <tbody>
                         <tr>
-                            <td><a href="http://{{ paste.link }}">{{ paste.link }}</a></td>
-                            <td>{{ paste.title | truncate(50, true) }}</td>
+                            <td><a href="http://{{ paste.link }}">
+                                    {% if paste.title %}
+                                        {{ paste.title | truncate(25, true) }}
+                                    {% else %}
+                                        <i>No title</i>
+                                    {% endif %}
+                                </a></td>
                             <td>{{ paste.created_at }}</td>
                             <td>
                                 <pre>{{ paste.paste | truncate(50) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre>
                             </td>
                             <td>
                                 <span class="icon">
-                                    <a href="{{ path_for('deletePaste', { 'base62': paste.base62 }) }}">
+                                    <a href="{{ path_for('deletePaste', { 'base62': paste.base62 }) }}"
+                                       onclick="return confirm('Delete paste?');">
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </span>

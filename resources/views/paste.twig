@@ -54,7 +54,7 @@
                             </td>
                             <td>
                                 <a href="{{ path_for('deletePaste', { 'base62': pasteBox.base62 }) }}"
-                                   class="button is-danger">
+                                   class="button is-danger" onclick="return confirm('Delete paste?');">
                                     <span class="icon is-small">
                                         <i class="fa fa-times"></i>
                                     </span>

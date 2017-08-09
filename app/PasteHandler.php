@@ -19,7 +19,7 @@ class PasteHandler
         $pasteId = $this->createPaste($paste);
         $base62 = Math::toBase($pasteId);
         $date = new \DateTime();
-        $currentDate = $date->format('d-m-Y H:i');
+        $currentDate = $date->format('Y-m-d H:i');
 
         $sql = "INSERT INTO pastebox (paste_id, title, syntax, base62, created_at)" .
             "VALUES (:paste_id, :title, :syntax, :base62, :created_at)";

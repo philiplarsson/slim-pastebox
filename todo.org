@@ -1,5 +1,5 @@
-* Todo [3/5]
-- [ ] Add about page (include highlightjs, slim)
+* Todo [4/6]
+- [X] Add about page (include highlightjs, slim)
 - [ ] Add author of paste
 - [ ] Add CLI readme and example usage
 - [X] Allow delete paste

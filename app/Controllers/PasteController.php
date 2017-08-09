@@ -79,6 +79,11 @@ class PasteController
         return $this->view->render($response, 'api.twig');
     }
 
+    public function about(Request $request, Response $response)
+    {
+        return $this->view->render($response, 'about.twig');
+    }
+
     public function create(Request $request, Response $response)
     {
         $requestData = $request->getParsedBody();
