@@ -1,7 +1,8 @@
-* Todo [5/8]
-- [ ] Add "remove after X days" feature. Use php cron script.
+* Todo [6/9]
 - [ ] Add author of paste
 - [ ] Add CLI readme and example usage
+- [ ] Add env file to set constants (now they are in PasteController)
+- [X] Add "remove after X days" feature. Use php cron script.
 - [X] Add pagination to pastes page
 - [X] Add about page (include highlightjs, slim)
 - [X] Allow delete paste
