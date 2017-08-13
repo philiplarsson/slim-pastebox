@@ -1,8 +1,10 @@
 <?php
 /**
- * This file should be added as a cron job and preferably be set to
- * the smallest interval in which an paste can expire. As default,
- * this is 60 minutes.
+ * This file should be added as a cron job and be set to at least the
+ * smallest interval in which an paste can expire.
+ * As default, this is 24 hours. If you don't run the script often
+ * enough, a paste might exist longer than expected.
+ * Preferably, run often (every hour).
  */
 
 
