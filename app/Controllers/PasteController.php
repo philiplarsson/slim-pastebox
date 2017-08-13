@@ -14,6 +14,7 @@ class PasteController
     protected $view;
     protected $pasteHandler;
     protected $router;
+    const PASTE_PER_PAGE = 15;
 
     public function __construct(Twig $view, PasteHandler $ph, Router $router)
     {
@@ -37,14 +38,35 @@ class PasteController
 
     public function showPastes(Request $request, Response $response)
     {
-        $pasteBoxes = $this->pasteHandler->getPasteBoxes();
+        $nbrOfPastes = $this->pasteHandler->getNbrOfPastes();
+        $nbrOfPages = ceil($nbrOfPastes/PasteController::PASTE_PER_PAGE);
+        $currentPage = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
 
+        /* Make sure currentPage is set and between sane values */
+        if (!isset($currentPage) ||
+            $currentPage < 1 ||
+            $currentPage > $nbrOfPages) {
+            $currentPage = 1;
+        }
+        $pasteBoxes = $this->pasteHandler->getPasteBoxes(($currentPage - 1) * PasteController::PASTE_PER_PAGE);
         foreach ($pasteBoxes as $paste) {
             $paste->link = $this->getLink($paste->base62);
         }
 
+        $pagesToShow = [];
+        foreach (range(1, $nbrOfPages) as $page) {
+            /** Show first, last and one between each limit */
+            if ($page == 1 ||
+                $page == $nbrOfPages ||
+                $page == $currentPage ||
+                ($page >= $currentPage -1 && $page <= $currentPage +1)) {
+                $pagesToShow[] = $page;
+            }
+        }
         return $this->view->render($response, 'pastes.twig', [
-            'pastes' => $pasteBoxes
+            'pastes' => $pasteBoxes,
+            'currentPage' => $currentPage,
+            'pages' => $pagesToShow
         ]);
     }
 
@@ -58,7 +80,7 @@ class PasteController
                 'notification' => "Field 'Paste' is required. "
             ]);
         }
-        $base62 = $this->pasteHandler->createPasteBox($parsedBody['title'], $parsedBody['syntax'], $paste);
+        $base62 = $this->pasteHandler->createPasteBox($paste, $parsedBody['title'], $parsedBody['syntax']);
         $link = $this->getLink($base62);
 
         return $this->view->render($response, 'new.twig', [

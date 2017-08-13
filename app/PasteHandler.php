@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controllers\PasteController;
 use App\Math as Math;
 use App\Models\PasteBox;
 
@@ -14,7 +15,7 @@ class PasteHandler
         $this->pdo = $pdo;
     }
 
-    public function createPasteBox($title, $syntax, $paste)
+    public function createPasteBox($paste, $title = '', $syntax = '')
     {
         $pasteId = $this->createPaste($paste);
         $base62 = Math::toBase($pasteId);
@@ -63,10 +64,13 @@ class PasteHandler
 
     public function getPasteBoxes($limit = 25)
     {
-        $sql = "SELECT * FROM pastebox ORDER BY id DESC LIMIT :limit";
+        $sql = "SELECT * FROM pastebox ORDER BY id DESC LIMIT :limit, :pastesPerPage";
         $stmt = $this->pdo->prepare($sql);
         $stmt->setFetchMode(\PDO::FETCH_CLASS, PasteBox::class);
-        $stmt->execute([ ':limit' => $limit ]);
+        $stmt->execute([
+            ':limit' => $limit,
+            ':pastesPerPage' => PasteController::PASTE_PER_PAGE
+        ]);
         $pasteBoxes = $stmt->fetchAll();
         if ($pasteBoxes === false) {
             return null;
@@ -109,5 +113,12 @@ class PasteHandler
         $sql = "DELETE FROM pastebox WHERE base62 = :base62";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([ ':base62' => $base62 ]);
+    }
+
+    public function getNbrOfPastes()
+    {
+        $sql = 'SELECT COUNT(*) FROM PASTES';
+        $q = $this->pdo->query($sql);
+        return intval(current($q->fetch(\PDO::FETCH_ASSOC)));
     }
 }
