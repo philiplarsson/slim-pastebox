@@ -15,6 +15,7 @@ class PasteController
     protected $pasteHandler;
     protected $router;
     const PASTE_PER_PAGE = 15;
+    const TIMEZONE = 'Europe/Stockholm';
 
     public function __construct(Twig $view, PasteHandler $ph, Router $router)
     {
@@ -31,6 +32,7 @@ class PasteController
             return $this->view->render($response, 'paste.twig');
         }
 
+        $pasteBox->link = $this->getLink($pasteBox->base62);
         return $this->view->render($response, 'paste.twig', [
             'pasteBox' => $pasteBox
         ]);
@@ -74,13 +76,18 @@ class PasteController
     {
         $parsedBody = $request->getParsedBody();
         $paste = $parsedBody['paste'];
-
+        $expires = $parsedBody['expires'];
+        if ($expires == 'never') {
+            $expiresDate = null;
+        } else {
+            $expiresDate = $this->getExpiresDate($expires);
+        }
         if (!isset($paste) || empty($paste)) {
             return $this->view->render($response, 'home.twig', [
                 'notification' => "Field 'Paste' is required. "
             ]);
         }
-        $base62 = $this->pasteHandler->createPasteBox($paste, $parsedBody['title'], $parsedBody['syntax']);
+        $base62 = $this->pasteHandler->createPasteBox($paste, $parsedBody['title'], $parsedBody['syntax'], $expiresDate);
         $link = $this->getLink($base62);
 
         return $this->view->render($response, 'new.twig', [
@@ -143,5 +150,22 @@ class PasteController
     private function getLink($base62)
     {
         return $_SERVER['HTTP_HOST'] . '/p/' . $base62;
+    }
+
+    /**
+     * Returns a DateTime object with added time.
+     *
+     * @param string $expires should be of any time that are specified
+     *                        here http://www.php.net/datetime.formats.relative
+     * @return \DateTime object with expire date
+     */
+    private function getExpiresDate(string $expires)
+    {
+        $expireDate = new \DateTime('now', new \DateTimeZone(PasteController::TIMEZONE));
+        $expireDate->modify($expires);
+        if (!$expireDate) {
+            throw new \InvalidArgumentException($expires . ' is not a valid argument to getExpiresDate. ');
+        }
+        return $expireDate;
     }
 }

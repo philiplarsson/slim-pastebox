@@ -12,4 +12,5 @@ class PasteBox
     public $created_at;
     public $paste;
     public $link;
+    public $expire_date;
 }

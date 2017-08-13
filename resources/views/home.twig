@@ -2,9 +2,9 @@
 
 {% block content %}
     <section class="section">
-        <div class="container">
+        <div class="container has-text-centered">
 
-            <h1 class="title is-1 has-text-centered">Pastebox</h1>
+            <h1 class="title is-1">Pastebox</h1>
             <br/>
             <form action="{{ path_for('createPaste') }}" method="post">
 
@@ -15,7 +15,7 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" type="text" name="title">
+                                <input class="input" name="title">
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,30 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" type="text" name="syntax">
+                                <input class="input" name="syntax">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="expires">Expire</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field is-narrow">
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                    <select name="expires" id="expires">
+                                        <option value="never" selected>never</option>
+                                        <option value="+24 hour">24 hours</option>
+                                        <option value="+48 hour">48 hours</option>
+                                        <option value="+1 week">1 week</option>
+                                        <option value="+2 weeks">2 weeks</option>
+                                        <option value="+1 month">1 month</option>
+                                        <option value="+3 months">3 months</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -41,7 +64,6 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-
                                 <textarea class="textarea" name="paste" placeholder="Hello World" rows="10"></textarea>
                             </div>
                         </div>

@@ -14,5 +14,6 @@ CREATE TABLE pastebox(
   syntax TEXT,
   base62 TEXT UNIQUE,
   created_at TEXT NOT NULL,
+  expire_date TEXT,
   FOREIGN KEY (paste_id) REFERENCES pastes (id)
 );

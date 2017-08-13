@@ -13,3 +13,12 @@
 code.hljs {
     padding: 25px;
 }
+
+.center-table {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.pastes-table tr > td:last-child {
+    text-align: right;
+}

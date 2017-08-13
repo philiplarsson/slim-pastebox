@@ -14,7 +14,7 @@
         <div class="container">
             <h2 class="title is-2">Pastes</h2>
             {% if pastes %}
-                <table class="table">
+                <table class="table center-table is-fullwidth pastes-table">
                     <thead>
                     <tr>
                         <th><strong>Title</strong></th>
@@ -37,7 +37,7 @@
                             <td>
                                 <pre>{{ paste.paste | truncate(50) | replace({"\n": "", "\r\n": "", "\t": "", "\n\r": ""}) }}</pre>
                             </td>
-                            <td>
+                            <td align="right">
                                 <span class="icon">
                                     <a href="{{ path_for('deletePaste', { 'base62': paste.base62 }) }}"
                                        onclick="return confirm('Delete paste?');">
@@ -49,7 +49,7 @@
                         </tbody>
                     {% endfor %}
                 </table>
-                <nav class="pagination">
+                <nav class="pagination is-centered">
                     <ul class="pagination-list">
                         {% for page in pages %}
                             {% if page == currentPage %}
