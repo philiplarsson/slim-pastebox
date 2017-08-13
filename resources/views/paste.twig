@@ -18,7 +18,7 @@
             <div class="columns">
                 <div class="column is-9">
                     {% if pasteBox.syntax %}
-                        <pre class="code-paste" ><code
+                        <pre class="code-paste"><code
                                     class="{{ pasteBox.syntax }}" id="code-copy">{{ pasteBox.paste }}</code></pre>
                     {% else %}
                         <pre class="code-paste"><code class="nohighlight">{{ pasteBox.paste }}</code></pre>
@@ -42,27 +42,26 @@
                         </tr>
                         </tbody>
                     </table>
-                    <table class="table is-fullwidth">
-                        <tr>
-                            <td>
-                                <a class="button is-info 3" data-clipboard-target="#code-copy">
+                    <div class="columns is-desktop">
+                        <div class="column">
+                            <a class="button is-info 3" data-clipboard-target="#code-copy">
                                     <span class="icon">
                                         <i class="fa fa-clipboard"></i>
                                     </span>
-                                    <span>Copy Paste</span>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ path_for('deletePaste', { 'base62': pasteBox.base62 }) }}"
-                                   class="button is-danger" onclick="return confirm('Delete paste?');">
+                                <span>Copy Paste</span>
+                            </a>
+                        </div>
+                        <div class="column">
+                            <a href="{{ path_for('deletePaste', { 'base62': pasteBox.base62 }) }}"
+                               class="button is-danger" onclick="return confirm('Delete paste?');">
                                     <span class="icon is-small">
                                         <i class="fa fa-times"></i>
                                     </span>
-                                    <span>Delete Paste</span>
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
+                                <span>Delete Paste</span>
+                            </a>
+                        </div>
+                    </div>
+                    <br/>
                 </div>
                 {% endif %}
             </div>
@@ -70,7 +69,7 @@
     </section>
     <script>
         var copyCode = new Clipboard('.button');
-        copyCode.on('success', function(event) {
+        copyCode.on('success', function (event) {
             event.clearSelection();
         });
     </script>
