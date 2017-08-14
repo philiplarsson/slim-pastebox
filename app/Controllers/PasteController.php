@@ -125,7 +125,7 @@ class PasteController
             ], 400);
         }
         $data = $requestData['data'];
-        $base62 = $this->pasteHandler->createPasteBox($data['title'], $data['syntax'], $data['paste']);
+        $base62 = $this->pasteHandler->createPasteBox($data['paste'], $data['title'], $data['syntax']);
         $link = $this->getLink($base62);
         return $response->withJson([
             'data' => [
